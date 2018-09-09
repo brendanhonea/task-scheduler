@@ -101,8 +101,6 @@ export class TaskController {
 
         Task.findOne({ name })
             .then(task => {
-                console.log(util.inspect(task));
-
                 const phrase: string = req.body.phrase ? req.body.phrase : task.phrase;
                 const schedule: string = req.body.schedule ? req.body.schedule : task.schedule;
                 task.phrase = phrase;

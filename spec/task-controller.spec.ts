@@ -1,7 +1,10 @@
 import taskController, { TaskController } from '../src/controllers/task-controller'
 import Task from '../src/models/task'
-import { Router, Request, Response, NextFunction } from 'express';
-import { request } from 'http';
+import { Router, Request, Response, NextFunction } from 'express'
+import * as request from 'supertest'
+import server from '../src/server'
+import * as finishTestCase from 'jasmine-supertest'
+import jobService from '../src/services/job-service'
 
 //Unit testing setup on controller
 describe('TaskController', () => {
@@ -28,4 +31,92 @@ describe('TaskController', () => {
     });
 });
 
-//TODO: write unit tests for funcationality
+//API tests
+
+describe('GET /tasks', () => {
+    const mockData = [
+        {
+            "name": "helloWorld",
+            "phrase": "hello world!",
+            "schedule": "* * * * * *",
+            "_id": "123",
+            "__v": 0
+        }
+    ];
+
+    beforeEach(() => {
+        //Mock Database call
+        spyOn(Task, 'find').and.returnValue(Promise.resolve(mockData))
+    });
+
+    it('should respond with OK code and json', (done) => {
+        request(server)
+            .get('/api/v1/tasks')
+            .set('Accept', 'application/json')
+            .expect(200, {
+                status: 200,
+                data: mockData
+            })
+            .end(finishTestCase(done));
+    });
+});
+
+describe('GET /task', () => {
+    const mockData =
+    {
+        "name": "helloWorld",
+        "phrase": "hello world!",
+        "schedule": "* * * * * *",
+        "_id": "123",
+        "__v": 0
+    }
+
+    beforeEach(() => {
+        //Mock Database call
+        spyOn(Task, 'findOne').and.returnValue(Promise.resolve(mockData))
+    });
+
+    it('should respond with OK code and json', (done) => {
+        request(server)
+            .get('/api/v1/tasks/task1')
+            .set('Accept', 'application/json')
+            .expect(200, {
+                status: 200,
+                data: mockData
+            })
+            .end(finishTestCase(done));
+    });
+});
+
+describe('DELETE /task', () => {
+    const mockData =
+    {
+        "name": "helloWorld",
+        "phrase": "hello world!",
+        "schedule": "* * * * * *",
+        "_id": "123",
+        "__v": 0
+    }
+
+    beforeEach(() => {
+        //Mock Database call
+        spyOn(Task, 'findOneAndRemove').and.returnValue(Promise.resolve(mockData))
+        spyOn(jobService, 'deleteJob');
+    });
+
+    it('should respond with OK code and json', (done) => {
+        request(server)
+            .delete('/api/v1/tasks/task1')
+            .set('Accept', 'application/json')
+            .expect(200, {
+                    status: 200,
+                    data: mockData
+            })
+            .expect(() => {
+                expect(jobService.deleteJob).toHaveBeenCalledWith('helloWorld');  
+            })
+            .end(finishTestCase(done));
+    });
+});
+
+//TODO: Figure out how to acceptance test the POST/PUT methods with supertest/mongo/jasmine, running into issues with mongo saves breaking tests

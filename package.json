@@ -20,7 +20,9 @@
     "@types/mongoose": "^5.2.9",
     "@types/node": "^10.9.4",
     "jasmine": "^3.2.0",
+    "jasmine-supertest": "^1.0.0",
     "jasmine-ts-console-reporter": "^3.1.1",
+    "supertest": "^3.3.0",
     "typescript": "^3.0.3"
   }
 }

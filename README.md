@@ -67,6 +67,7 @@ Some examples:
 
 The server runs on port 3001 by default, so if you are just running it locally \<hostname\> will always be `localhost:3001`
 
+All requests with bodies should use header: `'Accept': 'application/json'`
 
 ## **Create Task**
 

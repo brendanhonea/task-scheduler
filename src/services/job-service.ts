@@ -8,17 +8,12 @@ interface NamedJob {
     job: Function;
 }
 
-class JobService {
+export class JobService {
     jobs: NamedJob[] = [];
 
-    constructor() {
-        this.initJobs();
-    }
-    
     initJobs() {
         Task.find({}).then(taskList => {
             taskList.forEach(task => {
-                //init any tasks from the db
                 this.createJob(task.name, task.phrase, task.schedule);
             });
         });
@@ -50,4 +45,6 @@ class JobService {
 }
 
 const jobService = new JobService();
+jobService.initJobs(); //Initialize existing jobs on load
+
 export default jobService;
