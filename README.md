@@ -85,12 +85,16 @@ Body format:
 
 EXAMPLE: Create a hello world task that runs every 5 seconds 
 
+`POST localhost:3001/api/v1/tasks`
+
+body:
 ```
 {
     "name": "helloWorld",
     "phrase": "Hello World!",
     "schedule": "*/5 * * * * *"
 }
+```
 
 ## **Get All Tasks**
 
