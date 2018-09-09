@@ -22,6 +22,10 @@
 
  `$ mongod`
 
+ NOTE: if mongo is being installed for the first time on the machine, you may need to run 
+
+ `$ sudo mkdir /data/db`
+
  # Starting the server
 
  ## Clone repo and install dependencies
