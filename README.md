@@ -4,13 +4,17 @@
 
  # Prerequisites: 
 
- MongoDB and Typescript installed globally on server -
+ Node/NPM, MongoDB and Typescript installed globally on server -
 
- ## To install Typescript: 
+ ## Install Node/NPM: 
+
+ `https://nodejs.org/en/`
+
+ ## Install Typescript: 
 
  `$ npm install -g typescript`
 
- ## To install MongoDB: 
+ ## Install MongoDB: 
 
  Follow the installation guide for your OS found [here](https://docs.mongodb.com/manual/installation/)
 
@@ -69,7 +73,17 @@ The server runs on port 3001 by default, so if you are just running it locally \
 ### POST
  `/api/v1/tasks`
 
-Body format example, create a hello world job that prints to the console every 5 seconds: 
+Body format: 
+
+```
+{
+    "name": string,
+    "phrase": string,
+    "schedule": string
+}
+```
+
+EXAMPLE: Create a hello world task that runs every 5 seconds 
 
 ```
 {
@@ -77,7 +91,6 @@ Body format example, create a hello world job that prints to the console every 5
     "phrase": "Hello World!",
     "schedule": "*/5 * * * * *"
 }
-```
 
 ## **Get All Tasks**
 
